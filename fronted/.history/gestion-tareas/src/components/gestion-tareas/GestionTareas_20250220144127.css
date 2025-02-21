@@ -1,0 +1,16 @@
+/* Add this to your CSS file */
+.container-add-task {
+    border: 1px solid red !important;
+    padding: 1rem;
+}
+
+.container-add-task .col-12 {
+    border: 1px solid red !important;
+    margin-bottom: 1rem;
+    
+}
+
+/* Override PrimeReact styles if needed */
+.p-dialog .container-add-task {
+    width: 100%;
+}

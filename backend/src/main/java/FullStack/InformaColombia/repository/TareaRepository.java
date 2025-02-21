@@ -1,11 +1,10 @@
 package FullStack.InformaColombia.repository;
 
+import FullStack.InformaColombia.dto.request.TareaRequest;
 import FullStack.InformaColombia.dto.response.TareasResponse;
+import FullStack.InformaColombia.entity.Tarea;
 import FullStack.InformaColombia.entity.Usuario;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,4 +34,8 @@ public interface TareaRepository {
             "JOIN ESTADOS_TAREA et ON t.idEstadoTarea = et.id " +
             "WHERE t.estado = 'A'")
     List<TareasResponse> getAllTareas();
+
+    @Insert("INSERT INTO TAREAS (titulo, descripcion, estado, idUsuario, idEstadoTarea, create_at, vencimientoTarea) " +
+            "VALUES (#{titulo}, #{descripcion}, #{estado}, #{idUsuario}, #{idEstadoTarea}, #{createAt}, #{vencimientoTarea})")
+    Integer insertTask(Tarea task);
 }
