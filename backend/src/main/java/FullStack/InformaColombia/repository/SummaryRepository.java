@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface SummaryRepository<T> {
+public interface SummaryRepository {
 
     @Select("SELECT * FROM ESTADOS_TAREA")
     List<EstadoTarea> findAll();

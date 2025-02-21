@@ -9,7 +9,7 @@ public class TareaRequest {
     private String titulo;
     private String descripcion;
     private String estado;
-    private Integer idUsuario;
+    private String idUsuario;
     private Integer idEstadoTarea;
     private Date createAt;
     private Date vencimientoTarea;
@@ -19,7 +19,7 @@ public class TareaRequest {
     }
 
     // Constructor con todos los campos
-    public TareaRequest(Integer id, String titulo, String descripcion, String estado, Integer idUsuario, Integer idEstadoTarea, Date createAt, Date vencimientoTarea) {
+    public TareaRequest(Integer id, String titulo, String descripcion, String estado, String idUsuario, Integer idEstadoTarea, Date createAt, Date vencimientoTarea) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -47,7 +47,7 @@ public class TareaRequest {
         return estado;
     }
 
-    public Integer getIdUsuario() {
+    public String getIdUsuario() {
         return idUsuario;
     }
 
@@ -80,7 +80,7 @@ public class TareaRequest {
         this.estado = estado;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
+    public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
 

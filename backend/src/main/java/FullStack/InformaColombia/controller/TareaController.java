@@ -17,8 +17,14 @@ public class TareaController {
     TareaService tareaService;
 
     @GetMapping("/tareas")
-    public ResponseEntity<List<TareasResponse>> test() {
+    public ResponseEntity<List<TareasResponse>> tareas() {
         List<TareasResponse> responses = this.tareaService.getAllTareas();
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/tareasXUsuario/{username}")
+    public ResponseEntity<List<TareasResponse>> tareasXUsuario(@PathVariable String username) {
+        List<TareasResponse> responses = this.tareaService.tareasXUsuario(username);
         return ResponseEntity.ok(responses);
     }
 
@@ -26,5 +32,16 @@ public class TareaController {
     public ResponseEntity<String> createTarea(@RequestBody TareaRequest task) {
         String responses = this.tareaService.createTarea(task);
         return ResponseEntity.ok(responses);
+    }
+
+    @PutMapping("/updateTarea")
+    public ResponseEntity<String> updateTarea(@RequestBody TareaRequest task) {
+        String responses = this.tareaService.updateTarea(task);
+        return ResponseEntity.ok(responses);
+    }
+    @PutMapping("/inactivarTarea/{id}")
+    public ResponseEntity<String> inactivarTarea(@PathVariable Long id) {
+        String response = tareaService.inactivarTarea(id);
+        return ResponseEntity.ok(response);
     }
 }

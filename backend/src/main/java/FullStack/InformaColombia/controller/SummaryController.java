@@ -13,10 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/summary/")
-public class SummaryController<T> {
+public class SummaryController {
 
     @Autowired
-    private SummaryService<T> service;
+    private SummaryService service;
 
 
     @GetMapping("getAllData")

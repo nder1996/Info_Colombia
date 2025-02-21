@@ -10,10 +10,10 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class SummaryService<T> {
+public class SummaryService {
 
     @Autowired
-    private SummaryRepository<T> repository;
+    private SummaryRepository repository;
 
     public List<EstadoTarea> getAllData() {
         try {
