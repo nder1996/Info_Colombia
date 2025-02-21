@@ -1,6 +1,7 @@
 package FullStack.InformaColombia.controller;
 
 import FullStack.InformaColombia.dto.request.TareaRequest;
+import FullStack.InformaColombia.dto.response.ApiResponse;
 import FullStack.InformaColombia.dto.response.TareasResponse;
 import FullStack.InformaColombia.service.TareaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +18,31 @@ public class TareaController {
     TareaService tareaService;
 
     @GetMapping("/tareas")
-    public ResponseEntity<List<TareasResponse>> tareas() {
-        List<TareasResponse> responses = this.tareaService.getAllTareas();
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<ApiResponse<List<TareasResponse>>> tareas() {
+        ApiResponse<List<TareasResponse>> responses = this.tareaService.getAllTareas();
+        return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
 
     @GetMapping("/tareasXUsuario/{username}")
-    public ResponseEntity<List<TareasResponse>> tareasXUsuario(@PathVariable String username) {
-        List<TareasResponse> responses = this.tareaService.tareasXUsuario(username);
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<ApiResponse<List<TareasResponse>>> tareasXUsuario(@PathVariable String username) {
+        ApiResponse<List<TareasResponse>> responses = this.tareaService.tareasXUsuario(username);
+        return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
 
     @PostMapping("/createTarea")
-    public ResponseEntity<String> createTarea(@RequestBody TareaRequest task) {
-        String responses = this.tareaService.createTarea(task);
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<ApiResponse<String>> createTarea(@RequestBody TareaRequest task) {
+        ApiResponse<String> responses = this.tareaService.createTarea(task);
+        return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
 
     @PutMapping("/updateTarea")
-    public ResponseEntity<String> updateTarea(@RequestBody TareaRequest task) {
-        String responses = this.tareaService.updateTarea(task);
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<ApiResponse<String>> updateTarea(@RequestBody TareaRequest task) {
+        ApiResponse<String> responses = this.tareaService.updateTarea(task);
+        return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
     @PutMapping("/inactivarTarea/{id}")
-    public ResponseEntity<String> inactivarTarea(@PathVariable Long id) {
-        String response = tareaService.inactivarTarea(id);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse<String>> inactivarTarea(@PathVariable Long id) {
+        ApiResponse<String> responses = this.tareaService.inactivarTarea(id);
+        return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
 }

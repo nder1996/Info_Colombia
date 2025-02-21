@@ -1,11 +1,14 @@
 package FullStack.InformaColombia.service;
 
 import FullStack.InformaColombia.dto.request.TareaRequest;
+import FullStack.InformaColombia.dto.response.ApiResponse;
 import FullStack.InformaColombia.dto.response.TareasResponse;
 import FullStack.InformaColombia.entity.Tarea;
 import FullStack.InformaColombia.entity.Usuario;
 import FullStack.InformaColombia.repository.TareaRepository;
 import FullStack.InformaColombia.repository.UsuarioRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -23,23 +26,28 @@ public class TareaService {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    public List<TareasResponse> getAllTareas(){
-        String mensaje = "";
+    private static final Logger logger = LoggerFactory.getLogger(TareaService.class);
+
+
+    public ApiResponse<List<TareasResponse>> getAllTareas(){
+        logger.info("🔍 Iniciando búsqueda de todas las tareas");
         try {
             List<TareasResponse> tareas = this.tareaRepository.getAllTareas();
             if(tareas!=null && !tareas.isEmpty()){
-                return tareas;
+                logger.info("✅ Se encontraron {} tareas", tareas.size());
+                return ResponseApiBuilderService.successResponse(tareas, "TAREAS_ACTIVAR",200);
             }
-            return null;
+
         }catch (Exception e) {
             e.getStackTrace();
-            System.out.println(e.getMessage());
-            mensaje = "internal server error";
+            logger.error("❌ Error al obtener las tareas: {}", e.getMessage(), e);
+            ResponseApiBuilderService.errorResponse(500,"ERROR_SERVER","INTERNAL_SERVER_ERROR");
         }
-        return List.of();
+        logger.warn("⚠️ No se encontraron tareas en la base de datos");
+        return ResponseApiBuilderService.successResponse(null, "TAREAS_NO_ENCONTRADAS",204);
     }
 
-    public List<TareasResponse> tareasXUsuario(String username) {
+    public ApiResponse<List<TareasResponse>> tareasXUsuario(String username) {
         try {
             List<Map<String, Object>> roles = getRolesXUsuario(username);
             for(Map<String, Object> rol : roles) {
@@ -48,48 +56,59 @@ public class TareaService {
                     return getAllTareas();
                 }
             }
+            logger.info("🔍 Iniciando búsqueda de todas las tareas filtradas por usuario = {}", username);
             List<TareasResponse> tareas = this.tareaRepository.tareasXUsuario(username);
             if(tareas != null && !tareas.isEmpty()) {
-                return tareas;
-            } else {
-                return List.of();
+                logger.info("✅ Se encontraron {} tareas filtradas por usuario = {}", tareas.size() , username);
+                return ResponseApiBuilderService.successResponse(tareas, "TAREAS_ACTIVAR",200);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
-            return List.of();
+            logger.error("❌ Error al obtener las tareas filtradas por usuario = {} error {}", username,e.getMessage());
+            ResponseApiBuilderService.errorResponse(500,"ERROR_SERVER","INTERNAL_SERVER_ERROR");
         }
+        logger.warn("⚠️ No se encontraron tareas relacionados con el usuario = {} ",username);
+        return ResponseApiBuilderService.successResponse(null, "TAREAS_NO_ENCONTRADAS",204);
     }
 
-    public String createTarea(TareaRequest task){
-        String mensaje = "";
-        Usuario  user = new Usuario();
+    public ApiResponse<String> createTarea(TareaRequest task){
+        logger.info("📝 Iniciando creación de tarea: {}", task.getTitulo());
         try {
             Tarea tarea = new Tarea();
+            Usuario  user = new Usuario();
+
+            user = byUserXEmail(task.getIdUsuario());
+            logger.debug("👤 Usuario encontrado: {}", user.getEmail());
+
             tarea.setTitulo(task.getTitulo());
             tarea.setDescripcion(task.getDescripcion());
             tarea.setCreateAt(new Date());
             tarea.setVencimientoTarea(task.getVencimientoTarea());
             tarea.setIdEstadoTarea(task.getIdEstadoTarea());
-            user = byUserXEmail(task.getIdUsuario());
             tarea.setIdUsuario(user.getId());
             tarea.setEstado("A");
+
+            logger.debug("🔧 Tarea preparada para inserción");
             Integer row = this.tareaRepository.insertTareas(tarea);
             if(row!=null && row>0){
-                return "Tarea creada exitosamente";
+                logger.info("✅ Tarea creada exitosamente con ID");
+                return ResponseApiBuilderService.successResponse("Tarea creada exitosamente", "TAREA_CREADA",200);
             }
         }catch (Exception e) {
             e.getStackTrace();
-            System.out.println(e.getMessage());
-            mensaje = "internal server error";
+            logger.error("❌ Error al crear la tarea: {}", e.getMessage(), e);
+            ResponseApiBuilderService.errorResponse(500,"ERROR_SERVER","INTERNAL_SERVER_ERROR");
         }
-        return "Hubo un error al crear la tarea";
+        logger.warn("⚠️ No se pudo crear la tarea");
+        return ResponseApiBuilderService.successResponse("HUBO UN ERROR AL CREAR LA TAREA", "ERROR_CREAR_TAREA",400);
     }
 
-    public String updateTarea(TareaRequest task){
-        String mensaje = "";
-        Usuario user;
+    public ApiResponse<String> updateTarea(TareaRequest task) {
+        logger.info("🔄 Iniciando actualización de tarea ID: {}", task.getId());
         try {
+            Usuario user = byUserXEmail(task.getIdUsuario());
+            logger.debug("👤 Usuario verificado: {}", user.getId());
+
             Tarea tarea = new Tarea();
             tarea.setId(task.getId());
             tarea.setTitulo(task.getTitulo());
@@ -97,34 +116,42 @@ public class TareaService {
             tarea.setCreateAt(new Date());
             tarea.setVencimientoTarea(task.getVencimientoTarea());
             tarea.setIdEstadoTarea(task.getIdEstadoTarea());
-            user = byUserXEmail(task.getIdUsuario());
             tarea.setIdUsuario(user.getId());
             tarea.setEstado("A");
+
+            logger.debug("📋 Datos de tarea preparados para actualización");
             Integer row = this.tareaRepository.updateTareas(tarea);
-            if(row!=null && row>0){
-                return "Tarea actualizada exitosamente";
+
+            if(row != null && row > 0) {
+                logger.info("✅ Tarea actualizada exitosamente");
+                return ResponseApiBuilderService.successResponse("Tarea actualizada exitosamente", "TAREA_ACTUALIZADA",200);
             }
-        }catch (Exception e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            mensaje = "internal server error";
+
+            logger.warn("⚠️ No se pudo actualizar la tarea");
+            return ResponseApiBuilderService.successResponse("No se pudo actualizar la tarea", "HUBO_UN_ERROR",400);
+
+
+        } catch (Exception e) {
+            logger.error("❌ Error al actualizar tarea: {}", e.getMessage(), e);
+            e.getStackTrace();
+            return ResponseApiBuilderService.errorResponse(500,"ERROR_SERVER","INTERNAL_SERVER_ERROR");
         }
-        return "Hubo un error al actualizar la tarea";
     }
 
 
-
-    public String inactivarTarea(Long id) {
+    public ApiResponse<String> inactivarTarea(Long id) {
+        logger.info("🔵 Iniciando eliminada de tarea ID: {}", id);
         try {
             this.tareaRepository.inactivarTarea(id);
-            return "Tarea inactivada exitosamente";
+            logger.info("✅ Tarea {} eliminada exitosamente", id);
+            return ResponseApiBuilderService.successResponse("Tarea eliminada con éxito", "TAREA_ELIMINADA",200);
         } catch (Exception e) {
-            //log.error("Error inactivando tarea: " + e.getMessage());
-            return "Error al inactivar tarea";
+            logger.error("❌ Error al eliminada tarea {}: {}", id, e.getMessage(), e);
+            e.getStackTrace();
+            return ResponseApiBuilderService.errorResponse(500,"ERROR_SERVER","INTERNAL_SERVER_ERROR");
+
         }
     }
-
-
 
 
     public Usuario byUserXEmail(String email) throws UsernameNotFoundException {

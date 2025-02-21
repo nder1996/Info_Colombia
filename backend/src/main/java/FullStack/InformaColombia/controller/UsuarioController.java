@@ -1,6 +1,7 @@
 package FullStack.InformaColombia.controller;
 
 
+import FullStack.InformaColombia.dto.response.ApiResponse;
 import FullStack.InformaColombia.dto.response.TareasResponse;
 import FullStack.InformaColombia.entity.Usuario;
 import FullStack.InformaColombia.service.TareaService;
@@ -23,14 +24,14 @@ public class UsuarioController {
     UsuarioService usuarioService;
 
     @GetMapping("/getRolesXUsuario/{username}")
-    public ResponseEntity<List<Map<String, Object>>> tareas(@PathVariable String username) {
-        List<Map<String, Object>> response = this.usuarioService.rolesXUsuario(username);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> tareas(@PathVariable String username) {
+        ApiResponse<List<Map<String, Object>>> response = this.usuarioService.rolesXUsuario(username);
+        return ResponseEntity.status(response.getMeta().getStatusCode()).body(response);
     }
 
     @GetMapping("/getAllUsuario")
-    public ResponseEntity<List<Map<String, Object>>> getAllUsuario() {
-        List<Map<String, Object>> response = this.usuarioService.getAllUsuario();
+    public ResponseEntity<ApiResponse<List<Map<String, Object>>>> getAllUsuario() {
+        ApiResponse<List<Map<String, Object>>> response = this.usuarioService.getAllUsuario();
         return ResponseEntity.ok(response);
     }
 }

@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResponseApiBuilderService {
 
-    public static <T> ApiResponse<T> successResponse(T data, String key) {
+    public static <T> ApiResponse<T> successResponse(T data, String key,Integer status) {
         ApiResponse<T> response = new ApiResponse<>();
         try {
-            response.setMeta(new ApiResponse.Meta("Operación Exitosa", 200));
+            response.setMeta(new ApiResponse.Meta("Operación Exitosa", status));
             response.setData(data);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

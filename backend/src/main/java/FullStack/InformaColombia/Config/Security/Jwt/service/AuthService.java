@@ -3,17 +3,17 @@ package FullStack.InformaColombia.Config.Security.Jwt.service;
 import FullStack.InformaColombia.Config.Security.Jwt.JwtUtil;
 import FullStack.InformaColombia.dto.request.UsuarioRequest;
 import FullStack.InformaColombia.dto.request.UsuarioXRolRequest;
+import FullStack.InformaColombia.dto.response.ApiResponse;
 import FullStack.InformaColombia.entity.RolUsuario;
 import FullStack.InformaColombia.entity.Usuario;
 import FullStack.InformaColombia.repository.UsuarioRepository;
+import FullStack.InformaColombia.service.ResponseApiBuilderService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,12 +21,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 
 @Service
-public class AuthenticationService implements UserDetailsService{
+public class AuthService implements UserDetailsService{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -40,6 +38,8 @@ public class AuthenticationService implements UserDetailsService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthService.class);
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -47,22 +47,34 @@ public class AuthenticationService implements UserDetailsService{
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
     }
 
+
     public String authenticate(String username, String password) {
         try {
+            logger.info("🔑 Intentando autenticar al usuario: {}", username);
+
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password, null)
             );
+
             final UserDetails userDetails = loadUserByUsername(username);
-            return jwtTokenUtil.generateToken(userDetails);
+            String token = jwtTokenUtil.generateToken(userDetails);
+
+            logger.info("✅ Usuario autenticado exitosamente: {}", username);
+            return token;
+
         } catch (BadCredentialsException e) {
+            logger.error("❌ Error de autenticación para usuario: {}", username, e);
             throw e;
         }
     }
 
-    public String crearUsuario(UsuarioRequest usuario){
-        String mensaje = "";
+
+
+    public ApiResponse<String> crearUsuario(UsuarioRequest usuario) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
+            logger.info("👤 Iniciando creación de usuario: {}", usuario.getEmail());
+
             Usuario user = new Usuario();
             user.setCreateAt(new Date());
             user.setEstado("A");
@@ -70,40 +82,43 @@ public class AuthenticationService implements UserDetailsService{
             user.setEmail(usuario.getEmail());
             user.setPassword(passwordEncoder.encode(usuario.getPassword()));
             user.setUpdateAt(null);
+
             int rowAffect = this.usuarioRepository.insertUser(user);
-            if(rowAffect>0){
-                mensaje = "usuario Ingresado";
-            }else{
-                mensaje = "Hubo un error";
+            if (rowAffect > 0) {
+                logger.info("✅ Usuario creado exitosamente: {}", usuario.getEmail());
+                return ResponseApiBuilderService.successResponse(usuario.getEmail(), "Usuario creado exitosamente", 200);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
+            logger.error("❌ Error interno al crear usuario: {}", usuario.getEmail(), e);
             e.getStackTrace();
-            System.out.println(e.getMessage());
-            mensaje = "internal server error";
+            return ResponseApiBuilderService.errorResponse(500,"INTERNAL SERVER ERROR", "HUBO UN ERROR EN EL SERVIDOR");
         }
-        return mensaje;
+        logger.error("⚠️ Error al crear usuario: {}", usuario.getEmail());
+        return ResponseApiBuilderService.errorResponse(400,null, "Hubo un error al crear el usuario");
     }
 
-    public String AsignacionRolUsuario(UsuarioXRolRequest  usuarioXRolRequest){
-        String mensaje = "";
+
+    public ApiResponse<String> asignacionRolUsuario(UsuarioXRolRequest usuarioXRolRequest) {
         try {
+            logger.info("👥 Iniciando asignación de rol para usuario ID: {}", usuarioXRolRequest.getIdUsuario());
+
             RolUsuario rolUsuario = new RolUsuario();
             rolUsuario.setEstado("A");
             rolUsuario.setIdUsuario(usuarioXRolRequest.getIdUsuario());
             rolUsuario.setIdRol(usuarioXRolRequest.getIdRol());
-            int rowAffect = this.usuarioRepository.insertRolUsuario(rolUsuario);
-            if(rowAffect>0){
-                mensaje = "Rol Asignado";
-            }else{
-                mensaje = "Hubo un error";
-            }
-        }catch (Exception e) {
-            e.getStackTrace();
-            System.out.println(e.getMessage());
-            mensaje = "internal server error";
-        }
 
-        return mensaje;
+            int rowAffect = this.usuarioRepository.insertRolUsuario(rolUsuario);
+            if (rowAffect > 0) {
+                logger.info("✅ Rol asignado exitosamente al usuario ID: {}", usuarioXRolRequest.getIdUsuario());
+                return ResponseApiBuilderService.successResponse(null, "Rol asignado exitosamente", 200);
+            }
+            logger.error("⚠️ Error al asignar rol al usuario ID: {}", usuarioXRolRequest.getIdUsuario());
+            return ResponseApiBuilderService.errorResponse(400, "ERROR_ASIGNAR_ROL", "HUBO UN ERROR AL ASIGNAR ROLES");
+
+        } catch (Exception e) {
+            logger.error("❌ Error interno al asignar rol: {}", e.getMessage(), e);
+            return ResponseApiBuilderService.errorResponse(500,"INTERNAL SERVER ERROR", "INTERNAL SERVER ERROR");
+        }
     }
 
 }
