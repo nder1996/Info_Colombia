@@ -1,0 +1,80 @@
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+}
+
+.login-card {
+  width: 550px !important;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.login-header{
+  margin-bottom: 1rem !important;
+}
+
+.form-inicio{
+  margin-top: 1rem;
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #374151;
+  font-weight: 500;
+  text-align: start;
+}
+
+.p-inputtext {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  transition: border-color 0.2s;
+}
+
+.p-inputtext:focus {
+  border-color: #6366f1;
+  outline: none;
+}
+
+.p-invalid {
+  border-color: #ef4444;
+}
+
+.p-error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.p-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.p-button:hover {
+  background: #4f46e5;
+}
+
+.p-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
