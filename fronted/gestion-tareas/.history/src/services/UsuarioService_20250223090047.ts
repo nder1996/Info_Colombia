@@ -1,0 +1,95 @@
+import axios from "axios";
+import { AuthService } from "./AuthService";
+import { LocalStarogeService } from "./LocalStorageService";
+import { ApiResponse } from "src/models/ApiResponse";
+
+
+
+export interface usuarioRol {
+    id: number;
+    idRol: number;
+    idUsuario: number;
+    nombreRol: string;
+    nombreCompleto: string;
+}
+
+export interface usuario {
+    id: number;
+    nombre: string;
+    email: string;
+}
+
+export interface usuarioRegister {
+    id: number;
+    nombre: string;
+    email: string;
+    password: string;
+}
+
+export interface AuthData {
+    token: string;
+    username: string;
+}
+export class UsuarioService {
+
+    private static readonly baseUrl = 'http://localhost:8700/api/usuario';
+
+    static async obtenerRolesXUser(email: string): Promise<ApiResponse<usuarioRol[]> | null> {
+        try {
+            const token = AuthService.getToken()?.replace(/"/g, '');
+            //console.log("Token obtener roles : " + token);
+            const response = await axios.get<usuarioRol[]>(
+                `${this.baseUrl}/getRolesXUsuario/${email}`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            return response;
+        } catch (error) {
+            console.error('Error:', error);
+            return null;
+        }
+    }
+
+    static async getAllUsuario(): Promise<usuario[] | null> {
+        try {
+            const token = AuthService.getToken()?.replace(/"/g, '');
+            // console.log("Token obtener roles : " + token);
+            const response = await axios.get<usuario[]>(
+                `${this.baseUrl}/getAllUsuario`,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                }
+            );
+            return response.data;
+        } catch (error) {
+            console.error('Error:', error);
+            return null;
+        }
+    }
+
+
+    public static async registre(user: usuarioRegister): Promise<string> {
+        try {
+            const token = AuthService.getToken()?.replace(/"/g, '');
+            const response = await axios.post(`http://localhost:8700/api/auth/register`, user, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            });
+            LocalStarogeService.save('register user', JSON.stringify(response.data));
+            return response.data;
+        } catch (error) {
+            console.error('Login failed:', error);
+            throw error;
+        }
+    }
+
+
+
+}

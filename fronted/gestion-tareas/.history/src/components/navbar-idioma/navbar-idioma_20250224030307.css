@@ -1,0 +1,16 @@
+.language-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    background-color: #f9fafb;
+   }
+   
+   .language-label {
+    color: #1f2937;
+    font-weight: normal;
+   }
+   
+   .dropdown {
+    width: 224px; /* 14rem */
+   }

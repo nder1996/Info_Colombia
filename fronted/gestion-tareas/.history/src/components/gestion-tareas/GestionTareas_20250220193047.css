@@ -1,0 +1,19 @@
+/* Add this to your CSS file */
+.container-add-task {
+    padding: 1rem;
+}
+
+.container-add-task .col-12 {
+    border: 1px solid whitesmoke !important;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* Override PrimeReact styles if needed */
+.p-dialog .container-add-task {
+    width: 100%;
+}

@@ -16,10 +16,10 @@ public class JwtRequest {
     private String username;
 
     @NotBlank(message = "La contraseña es obligatoria")
-    @Pattern(
+    /*@Pattern(
             regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$",
             message = "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y caracteres especiales"
-    )
+    )*/
     private String password;
 
     // Constructor sin argumentos (generado por @NoArgsConstructor)

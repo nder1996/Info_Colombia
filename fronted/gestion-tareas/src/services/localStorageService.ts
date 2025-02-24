@@ -1,6 +1,8 @@
-export class LocalStarogeService{
 
-    
+
+export class LocalStarogeService {
+
+
   public static save(key: string, value: any): void {
     try {
       const serializedValue = JSON.stringify(value);
@@ -32,12 +34,12 @@ export class LocalStarogeService{
     }
   }
 
- 
+
   public static exists(key: string): boolean {
     return localStorage.getItem(key) !== null;
   }
 
- 
+
   public static clear(): void {
     try {
       localStorage.clear();

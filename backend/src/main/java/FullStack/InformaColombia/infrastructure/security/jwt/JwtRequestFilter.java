@@ -40,8 +40,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         final String authorizationHeader = request.getHeader("Authorization");
-        logger.debug("🔍 Procesando solicitud con encabezado de Autorización: {}",
-                authorizationHeader != null ? "presente" : "ausente");
 
         String username = null;
         String jwt = null;
@@ -50,14 +48,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwt = authorizationHeader.substring(7);
             try {
                 username = jwtTokenUtil.extractUsername(jwt);
-                logger.debug("✅ Usuario extraído con éxito: {}", username);
             } catch (ExpiredJwtException e) {
-                logger.error("⚠️ Token JWT expirado para la solicitud: {}", request.getRequestURI(), e);
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Token JWT expirado");
                 return;
             } catch (JwtException e) {
-                logger.error("❌ Token JWT inválido para la solicitud: {}", request.getRequestURI(), e);
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Token inválido");
                 return;
@@ -66,16 +61,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            logger.debug("👤 Detalles de usuario cargados para: {}", username);
 
             if (jwtTokenUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-                logger.info("🎉 Usuario autenticado exitosamente: {}", username);
-            } else {
-                logger.warn("⚠️ Falló la validación del token para el usuario: {}", username);
             }
         }
         chain.doFilter(request, response);

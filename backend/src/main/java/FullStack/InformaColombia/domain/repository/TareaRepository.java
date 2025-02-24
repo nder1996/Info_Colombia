@@ -58,6 +58,7 @@ public interface TareaRepository {
 
     @Insert("INSERT INTO TAREAS (titulo, descripcion, estado, idUsuario, idEstadoTarea, create_at, vencimientoTarea) " +
             "VALUES (#{titulo}, #{descripcion}, #{estado}, #{idUsuario}, #{idEstadoTarea}, #{createAt}, #{vencimientoTarea})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     Integer insertTareas(Tarea task);
 
     @Update("UPDATE TAREAS SET titulo = #{titulo}, descripcion = #{descripcion}, estado = #{estado}, " +

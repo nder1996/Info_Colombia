@@ -7,17 +7,17 @@ import jakarta.validation.constraints.Size;
 
 public class UsuarioRequest {
 
+    private Integer id;
+
     @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 100, message = "El nombre no puede exceder 100 caracteres")
     private String nombre;
 
-    @NotBlank(message = "El email es obligatorio")
-    @Email(message = "Email debe ser válido")
-    @Size(max = 100, message = "El email no puede exceder 100 caracteres")
+    @NotBlank(message = "El password es obligatorio")
+    @Size(max = 100, message = "El password no puede exceder 100 caracteres")
     private String password;
 
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, max = 100, message = "La contraseña debe tener entre 6 y 100 caracteres")
+    @NotBlank(message = "el email es obligatoria")
     private String email;
 
     public String getNombre() {
@@ -43,5 +43,14 @@ public class UsuarioRequest {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setInteger(Integer id) {
+        this.id = id;
+    }
+
 
 }

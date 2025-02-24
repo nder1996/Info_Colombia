@@ -32,18 +32,18 @@ public class TareaController {
     }
 
     @PostMapping("/createTarea")
-    public ResponseEntity<ApiResponse<String>> createTarea(@RequestBody TareaRequest task) {
+    public ResponseEntity<ApiResponse<String>> createTarea(@Valid @RequestBody TareaRequest task) {
         ApiResponse<String> responses = this.tareaService.createTarea(task);
         return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
 
     @PutMapping("/updateTarea")
-    public ResponseEntity<ApiResponse<String>> updateTarea(@RequestBody TareaRequest task) {
+    public ResponseEntity<ApiResponse<String>> updateTarea(@Valid @RequestBody TareaRequest task) {
         ApiResponse<String> responses = this.tareaService.updateTarea(task);
         return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
     @PutMapping("/inactivarTarea/{id}")
-    public ResponseEntity<ApiResponse<String>> inactivarTarea(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> inactivarTarea(@Valid @PathVariable Long id) {
         ApiResponse<String> responses = this.tareaService.inactivarTarea(id);
         return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }

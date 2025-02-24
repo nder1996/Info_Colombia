@@ -6,8 +6,7 @@ import java.util.Date;
 
 public class TareaRequest {
 
-    @NotNull(message = "El ID es obligatorio")
-    @Min(value = 1, message = "El ID debe ser mayor a 0")
+    @Min(value = 0, message = "El ID debe ser mayor a -1")
     @Digits(integer = 11, fraction = 0, message = "El ID debe ser un número entero")
     private Integer id;
 
@@ -18,8 +17,8 @@ public class TareaRequest {
     @Size(max = 1000, message = "La descripción no puede exceder 1000 caracteres")
     private String descripcion;
 
-    @NotBlank(message = "El correo del usuario es obligatorio")
-    @Email(message = "Debe ser un correo electrónico válido")
+    @NotBlank(message = "El username del usuario es obligatorio")
+    @Email(message = "Por favor, ingresa una dirección de correo electrónico válida como nombre de usuario.")
     private String username;
 
     @NotNull(message = "El estado de la tarea es obligatorio")

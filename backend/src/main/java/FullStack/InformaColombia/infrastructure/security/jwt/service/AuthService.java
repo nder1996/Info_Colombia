@@ -51,7 +51,6 @@ public class AuthService implements UserDetailsService{
 
     public String authenticate(String username, String password) {
         try {
-            logger.info("🔑 Intentando autenticar al usuario: {}", username);
 
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password, null)
@@ -60,11 +59,9 @@ public class AuthService implements UserDetailsService{
             final UserDetails userDetails = loadUserByUsername(username);
             String token = jwtTokenUtil.generateToken(userDetails);
 
-            logger.info("✅ Usuario autenticado exitosamente: {}", username);
             return token;
 
         } catch (BadCredentialsException e) {
-            logger.error("❌ Error de autenticación para usuario: {}", username, e);
             throw e;
         }
     }
@@ -74,7 +71,6 @@ public class AuthService implements UserDetailsService{
     public ApiResponse<String> crearUsuario(UsuarioRequest usuario) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
-            logger.info("👤 Iniciando creación de usuario: {}", usuario.getEmail());
 
             Usuario user = new Usuario();
             user.setCreateAt(new Date());
@@ -86,22 +82,18 @@ public class AuthService implements UserDetailsService{
 
             int rowAffect = this.usuarioRepository.insertUser(user);
             if (rowAffect > 0) {
-                logger.info("✅ Usuario creado exitosamente: {}", usuario.getEmail());
                 return ResponseApiBuilderService.successResponse(usuario.getEmail(), "Usuario creado exitosamente", 200);
             }
         } catch (Exception e) {
-            logger.error("❌ Error interno al crear usuario: {}", usuario.getEmail(), e);
             e.getStackTrace();
             return ResponseApiBuilderService.errorResponse(500,"INTERNAL SERVER ERROR", "HUBO UN ERROR EN EL SERVIDOR");
         }
-        logger.error("⚠️ Error al crear usuario: {}", usuario.getEmail());
         return ResponseApiBuilderService.errorResponse(400,null, "Hubo un error al crear el usuario");
     }
 
 
     public ApiResponse<String> asignacionRolUsuario(UsuarioXRolRequest usuarioXRolRequest) {
         try {
-            logger.info("👥 Iniciando asignación de rol para usuario ID: {}", usuarioXRolRequest.getIdUsuario());
 
             RolUsuario rolUsuario = new RolUsuario();
             rolUsuario.setEstado("A");
@@ -110,14 +102,11 @@ public class AuthService implements UserDetailsService{
 
             int rowAffect = this.usuarioRepository.insertRolUsuario(rolUsuario);
             if (rowAffect > 0) {
-                logger.info("✅ Rol asignado exitosamente al usuario ID: {}", usuarioXRolRequest.getIdUsuario());
                 return ResponseApiBuilderService.successResponse(null, "Rol asignado exitosamente", 200);
             }
-            logger.error("⚠️ Error al asignar rol al usuario ID: {}", usuarioXRolRequest.getIdUsuario());
             return ResponseApiBuilderService.errorResponse(400, "ERROR_ASIGNAR_ROL", "HUBO UN ERROR AL ASIGNAR ROLES");
 
         } catch (Exception e) {
-            logger.error("❌ Error interno al asignar rol: {}", e.getMessage(), e);
             return ResponseApiBuilderService.errorResponse(500,"INTERNAL SERVER ERROR", "INTERNAL SERVER ERROR");
         }
     }
