@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: FullStack.InformaColombia.InformaColombiaApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.813 s -- in FullStack.InformaColombia.InformaColombiaApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.782 s -- in FullStack.InformaColombia.InformaColombiaApplicationTests
