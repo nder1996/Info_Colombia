@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import LoadingSpinner from './LoadingSpinner';
 import { loadingStore } from 'src/services/interceptorLoadingService';
+import LoadingSpinner from './LoadingSpinner';
 
 export const LoadingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
