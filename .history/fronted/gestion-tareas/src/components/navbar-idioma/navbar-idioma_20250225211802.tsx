@@ -61,28 +61,29 @@ const NavbarIdioma = () => {
         zIndex: 1000,
       }}
     >
-
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexGrow: 1,
-        }}
-      >
-        <img
-          src="https://cdn-icons-png.flaticon.com/512/5488/5488065.png"
-          alt="Task Manager Icon"
-          style={{ height: '24px', marginRight: '10px' }}
-        />
-        <span
-          style={{
-            fontSize: '1.4rem',
-            fontWeight: 'bold',
-            color: '#333',
-          }}
-        >
-        </span>
-      </div>
+     
+     <div
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    flexGrow: 1,
+  }}
+>
+  <img 
+    src="https://cdn-icons-png.flaticon.com/512/5488/5488065.png" 
+    alt="Task Manager Icon" 
+    style={{ height: '24px', marginRight: '10px' }}
+  />
+  <span
+    style={{
+      fontSize: '1.4rem',
+      fontWeight: 'bold',
+      color: '#333',
+    }}
+  >
+    Gestión de Tareas
+  </span>
+</div>
 
       {auth.isAuthenticated && auth.rolAdmin && (
         <div style={{ marginRight: '20px' }}>

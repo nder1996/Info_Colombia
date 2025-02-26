@@ -21,6 +21,7 @@ export class AuthService {
     try {
       if (!auth?.username) return;
       
+      // Initial save
       LocalStarogeService.save('authToken', JSON.stringify(auth));
       
       const rol = await UsuarioService.obtenerRolesXUser(auth.username);

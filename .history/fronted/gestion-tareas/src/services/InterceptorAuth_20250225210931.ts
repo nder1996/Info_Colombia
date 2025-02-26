@@ -8,10 +8,10 @@ const InterceptorAuth = {
     baseURL: 'https://info-colombia.onrender.com/api/usuario'
   }),
   summary: axios.create({
-    baseURL: 'https://info-colombia.onrender.com/api/summary/'
+    baseURL: 'http://localhost:8700/api/summary/'
   }),
   tarea: axios.create({
-    baseURL: 'https://info-colombia.onrender.com/api/tarea/'
+    baseURL: 'http://localhost:8700/api/tarea/'
   })
 };
 

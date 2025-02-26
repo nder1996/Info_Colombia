@@ -21,10 +21,13 @@ export class AuthService {
     try {
       if (!auth?.username) return;
       
+      // Initial save
       LocalStarogeService.save('authToken', JSON.stringify(auth));
       
+      // Get role info
       const rol = await UsuarioService.obtenerRolesXUser(auth.username);
       
+      // Parse existing data before updating
       const storedAuth = JSON.parse(LocalStarogeService.get('authToken') ?? "");
       
       storedAuth.rolAdmin = rol?.meta?.statusCode == 200 && 

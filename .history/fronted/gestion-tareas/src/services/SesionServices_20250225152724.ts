@@ -13,7 +13,7 @@ export interface usuarioRegister {
     password: string;
 }
 export class SesionServices {
-    private static readonly baseUrl = 'https://info-colombia.onrender.com/api/auth';
+    private static readonly baseUrl = 'http://localhost:8700/api/auth';
 
 
     public static async login(username: string, password: string): Promise<void> {

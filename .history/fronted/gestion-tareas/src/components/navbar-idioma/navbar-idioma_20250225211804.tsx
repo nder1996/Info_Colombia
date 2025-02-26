@@ -81,6 +81,7 @@ const NavbarIdioma = () => {
             color: '#333',
           }}
         >
+          Gestión de Tareas
         </span>
       </div>
 
