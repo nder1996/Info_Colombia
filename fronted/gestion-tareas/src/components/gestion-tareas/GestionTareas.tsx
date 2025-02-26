@@ -174,9 +174,9 @@ export default function GestionTareas() {
       setTypeButtonEvent('agregar');
       await loadSummaryData();
       setVisible(true);
-      console.log("button agregar")
+    //  console.log("button agregar")
       resetForm();
-      console.log(" valor eleiminado : " + watch())
+    //  console.log(" valor eleiminado : " + watch())
     } catch (error) {
       console.error('Error:', error);
       mostrarError("Error", "No se pudo abrir el formulario");
@@ -185,7 +185,7 @@ export default function GestionTareas() {
 
   const bottonEditar = async (tarea: TareasResponse) => {
     const sessionInfo = AuthService.getInfoSession();
-    console.log("tarea selecionada "+JSON.stringify(tarea))
+    //console.log("tarea selecionada "+JSON.stringify(tarea))
     try {
       await loadSummaryData();
       reset({

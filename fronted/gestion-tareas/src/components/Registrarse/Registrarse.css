@@ -1,12 +1,20 @@
-
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  width: 100%;
+  padding: 1rem;
+}
 .auth-card {
   background: white;
   padding: 2.5rem;
   border-radius: 16px;
-  width: 100%;
-  width: 520px;
+  max-width: 470px !important;
+  width: 100% !important;
+  margin: 10px auto; 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  margin-top: 10px;
+  /* sin borde rojo */
 }
 
 .auth-header {
@@ -43,7 +51,7 @@
   border-radius: 10px !important;
   background: #f8fafc !important;
   transition: all 0.3s ease !important;
- 
+
 
   /*margin-top: 1rem !important;*/
 }
@@ -92,7 +100,8 @@
 }
 
 /* Para centrar verticalmente también */
-.table-cell, .table-header {
+.table-cell,
+.table-header {
   vertical-align: middle;
 }
 
@@ -103,12 +112,12 @@
   margin-top: 15px;
   color: #007bff;
   transition: color 0.3s ease;
- }
- 
- .home-icon-link .home-icon {
+}
+
+.home-icon-link .home-icon {
   font-size: 1.5rem;
- }
- 
- .home-icon-link:hover {
+}
+
+.home-icon-link:hover {
   color: #0056b3;
- }
+}

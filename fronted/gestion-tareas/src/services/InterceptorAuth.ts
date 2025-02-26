@@ -21,7 +21,7 @@ const InterceptorAuth = {
 Object.values(InterceptorAuth).forEach(api => {
   api.interceptors.request.use(
     (config) => {
-      console.log(`Request Details: 
+      /*console.log(`Request Details: 
         method: ${config.method}, 
         url: ${config.url}, 
         baseURL: ${config.baseURL}, 
@@ -29,14 +29,14 @@ Object.values(InterceptorAuth).forEach(api => {
         headers: ${JSON.stringify(config.headers)}, 
         params: ${JSON.stringify(config.params)}, 
         data: ${JSON.stringify(config.data)}`
-      );
+      );*/
       
       loadingStore.show();
       const token = AuthService.getToken()?.replace(/"/g, '');
       
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
-        console.log(`Token added to request: ${token}`);
+        //console.log(`Token added to request: ${token}`);
       }
       
       return config;

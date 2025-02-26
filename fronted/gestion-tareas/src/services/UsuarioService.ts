@@ -158,7 +158,7 @@ export class UsuarioService {
       
       static async crearUsuario(usuario: usuarioConRol): Promise<ApiResponse<string>> {
         try {
-          console.log("crear usuario : "+JSON.stringify(usuario));
+         // console.log("crear usuario : "+JSON.stringify(usuario));
           //alert("crear usuario : "+JSON.stringify(usuario));
           const response = await InterceptorAuth.usuario.post<ApiResponse<string>>(
             '/crear',
