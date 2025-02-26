@@ -124,7 +124,7 @@ export default function GestionTareas() {
     }
     setLoading(false);
 
-  }, [mensajes.advertencia.errorCargarTareas, mostrarAdvertencia])
+  }
 
   const loadSummaryData = async () => {
     try {

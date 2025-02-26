@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'; // Agrega useRef
+import React, { useEffect, useRef, useState } from 'react'; // Agrega useRef
 
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -89,7 +89,7 @@ export default function GestionTareas() {
   const [rolAdmin, setRolAdmin] = useState<boolean>(false);
 
 
-  const fetchRoles = useCallback ( async () => {
+  const fetchRoles = useCallback(async async () => {
     const sessionInfo = AuthService.getInfoSession();
     if (sessionInfo?.username) {
       const rol = await UsuarioService.obtenerRolesXUser(sessionInfo.username);
@@ -97,9 +97,9 @@ export default function GestionTareas() {
         setRolAdmin(Array.isArray(rol.data) ? rol.data.some(rol => rol.id == 1) : false);
       }
     }
-  },[]);
+  };
 
-  const loadUsuario = useCallback( async () => {
+  const loadUsuario = async () => {
     try {
       const data = await UsuarioService.getAllUsuario();
       if (data && data.data && data.meta?.statusCode == 200) {
@@ -109,10 +109,10 @@ export default function GestionTareas() {
       console.error('Error loading summary:', error);
     }
 
-  },[]);
+  };
 
 
-  const fetchTareas =useCallback( async () => {
+  const fetchTareas = async () => {
     setLoading(true);
     const sessionInfo = AuthService.getInfoSession();
     const tarea = await GestionTareasService.getTareasXUsuario(sessionInfo.username);
@@ -124,7 +124,7 @@ export default function GestionTareas() {
     }
     setLoading(false);
 
-  }, [mensajes.advertencia.errorCargarTareas, mostrarAdvertencia])
+  }
 
   const loadSummaryData = async () => {
     try {
@@ -150,7 +150,7 @@ export default function GestionTareas() {
     if (notifications.length > 0) {
       mostrarInfo(mensajes.informacion.nuevaTarea, notifications[notifications.length - 1].titulo);
     }
-  }, [notifications, fetchTareas, fetchRoles, loadUsuario, mensajes.informacion.nuevaTarea, mostrarInfo]);
+  }, [notifications,fetchTareas,fetchRoles,loadUsuario]);
 
 
 

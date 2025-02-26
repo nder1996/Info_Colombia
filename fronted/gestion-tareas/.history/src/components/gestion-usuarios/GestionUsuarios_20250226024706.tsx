@@ -114,7 +114,7 @@ export default function GestionUsuarios() {
     } else {
       mostrarError("ERROR", "Error al cargar roles");
     }
-  }, [mostrarError])
+  })
 
 
 

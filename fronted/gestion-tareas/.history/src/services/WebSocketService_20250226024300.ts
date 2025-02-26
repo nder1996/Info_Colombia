@@ -17,6 +17,7 @@ class WebSocketService {
       return;
     }
     
+    // Corregida la URL que tenía https:// duplicado
     const socket = new SockJS("https://info-colombia.onrender.com/ws");
     
     this.client = new Client({

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Badge } from 'primereact/badge';
@@ -97,7 +97,7 @@ export default function GestionUsuarios() {
     }
   });
 
-  const getAllUsuariosConRol = useCallback(async () => {
+  const getAllUsuariosConRol = async () => {
     const usuarios = await UsuarioService.getAllUsuariosConRol()
     if (usuarios && usuarios.data && usuarios.meta?.statusCode == 200) {
       setUsuarios(usuarios.data);
@@ -105,23 +105,23 @@ export default function GestionUsuarios() {
     } else {
       mostrarError("ERROR", textsUsuarios.mensajes.error.procesarUsuario);
     }
-  }, [textsUsuarios.mensajes.error.procesarUsuario, mostrarError])
+  }
 
-  const getAllRoles = useCallback (async () => {
+  const getAllRoles = async () => {
     const rol = await SummaryService.obtenerSummaryRol()
     if (rol && rol.data && rol.meta?.statusCode == 200) {
       setRol(rol.data);
     } else {
       mostrarError("ERROR", "Error al cargar roles");
     }
-  }, [mostrarError])
+  }
 
 
 
   useEffect(() => {
     getAllUsuariosConRol();
     getAllRoles();
-  }, [getAllUsuariosConRol,getAllRoles]);
+  }, getAllRoles, getAllUsuariosConRlo);
 
 
 

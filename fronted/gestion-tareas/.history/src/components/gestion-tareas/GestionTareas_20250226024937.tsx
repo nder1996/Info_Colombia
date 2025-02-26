@@ -112,7 +112,7 @@ export default function GestionTareas() {
   },[]);
 
 
-  const fetchTareas =useCallback( async () => {
+  const fetchTareas = async () => {
     setLoading(true);
     const sessionInfo = AuthService.getInfoSession();
     const tarea = await GestionTareasService.getTareasXUsuario(sessionInfo.username);
@@ -124,7 +124,7 @@ export default function GestionTareas() {
     }
     setLoading(false);
 
-  }, [mensajes.advertencia.errorCargarTareas, mostrarAdvertencia])
+  }
 
   const loadSummaryData = async () => {
     try {

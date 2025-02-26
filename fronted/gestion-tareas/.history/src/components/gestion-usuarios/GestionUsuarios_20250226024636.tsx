@@ -105,16 +105,16 @@ export default function GestionUsuarios() {
     } else {
       mostrarError("ERROR", textsUsuarios.mensajes.error.procesarUsuario);
     }
-  }, [textsUsuarios.mensajes.error.procesarUsuario, mostrarError])
+  })
 
-  const getAllRoles = useCallback (async () => {
+  const getAllRoles =useCallback async () => {
     const rol = await SummaryService.obtenerSummaryRol()
     if (rol && rol.data && rol.meta?.statusCode == 200) {
       setRol(rol.data);
     } else {
       mostrarError("ERROR", "Error al cargar roles");
     }
-  }, [mostrarError])
+  }
 
 
 

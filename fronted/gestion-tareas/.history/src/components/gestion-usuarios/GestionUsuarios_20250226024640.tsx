@@ -105,7 +105,7 @@ export default function GestionUsuarios() {
     } else {
       mostrarError("ERROR", textsUsuarios.mensajes.error.procesarUsuario);
     }
-  }, [textsUsuarios.mensajes.error.procesarUsuario, mostrarError])
+  })
 
   const getAllRoles = useCallback (async () => {
     const rol = await SummaryService.obtenerSummaryRol()
@@ -114,7 +114,7 @@ export default function GestionUsuarios() {
     } else {
       mostrarError("ERROR", "Error al cargar roles");
     }
-  }, [mostrarError])
+  }
 
 
 

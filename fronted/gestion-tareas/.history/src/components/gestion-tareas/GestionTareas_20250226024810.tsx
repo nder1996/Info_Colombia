@@ -99,7 +99,7 @@ export default function GestionTareas() {
     }
   },[]);
 
-  const loadUsuario = useCallback( async () => {
+  const loadUsuario = useCallback(async async () => {
     try {
       const data = await UsuarioService.getAllUsuario();
       if (data && data.data && data.meta?.statusCode == 200) {
@@ -109,10 +109,10 @@ export default function GestionTareas() {
       console.error('Error loading summary:', error);
     }
 
-  },[]);
+  };
 
 
-  const fetchTareas =useCallback( async () => {
+  const fetchTareas = async () => {
     setLoading(true);
     const sessionInfo = AuthService.getInfoSession();
     const tarea = await GestionTareasService.getTareasXUsuario(sessionInfo.username);
@@ -124,7 +124,7 @@ export default function GestionTareas() {
     }
     setLoading(false);
 
-  }, [mensajes.advertencia.errorCargarTareas, mostrarAdvertencia])
+  }
 
   const loadSummaryData = async () => {
     try {
@@ -150,7 +150,7 @@ export default function GestionTareas() {
     if (notifications.length > 0) {
       mostrarInfo(mensajes.informacion.nuevaTarea, notifications[notifications.length - 1].titulo);
     }
-  }, [notifications, fetchTareas, fetchRoles, loadUsuario, mensajes.informacion.nuevaTarea, mostrarInfo]);
+  }, [notifications,fetchTareas,fetchRoles,loadUsuario]);
 
 
 
