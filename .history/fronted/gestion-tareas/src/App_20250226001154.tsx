@@ -11,7 +11,10 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { LanguageProvider } from './context/LanguageContext';
 import NavbarIdioma from './components/navbar-idioma/navbar-idioma';
-import { LoadingProvider } from './components/loadingSpinner/LoadingProvider';
+import { ... } from './components/loadingSpinner/LoadingProvider';
+
+
+
 
 
 

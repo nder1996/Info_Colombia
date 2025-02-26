@@ -10,11 +10,11 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { LanguageProvider } from './context/LanguageContext';
-import NavbarIdioma from './components/navbar-idioma/navbar-idioma';
 import { LoadingProvider } from './components/loadingSpinner/LoadingProvider';
+import NavbarIdioma from './components/navbar-idioma/navbar-idioma';
 
 
-
+import { LoadingProvider } from './components/LoadingSpinner/LoadingProvider';
 
 function App() {
   return (
