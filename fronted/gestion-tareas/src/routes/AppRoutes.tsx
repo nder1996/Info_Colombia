@@ -4,7 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import useAuthStore from "../store/auth/useAuthStore";
 import GestionTareas from "src/components/gestion-tareas/GestionTareas";
 import InicioSession from "src/components/InicioSession/InicioSession";
-import Registrarse from "src/components/registrarse/Registrarse";
+import Registrarse from "src/components/Registrarse/Registrarse";
 import GestionUsuarios from "src/components/gestion-usuarios/GestionUsuarios";
 
 const AppRoutes: React.FC = () => {
