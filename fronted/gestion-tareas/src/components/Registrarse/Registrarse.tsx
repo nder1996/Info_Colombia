@@ -79,14 +79,12 @@ const Registrarse = () => {
 
   return (
     <div className="auth-container">
-      <NavbarIdioma></NavbarIdioma>
       <Toast ref={toastRef} />
       <div className="auth-card">
         <div className="auth-header">
           <h2>{texts.registrarse}</h2>
           <p>{texts.comenzarViaje}</p>
         </div>
-
         <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group">
             <span className="p-float-label">

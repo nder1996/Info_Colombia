@@ -36,11 +36,14 @@ public class AuthController {
         return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
 
-    @PostMapping("/asignarRol")
+
+
+  /*  @PostMapping("/asignarRol")
     public ResponseEntity<ApiResponse<String>> asignarRol(@Valid @RequestBody UsuarioXRolRequest request) {
         ApiResponse<String> responses = this.authService.asignacionRolUsuario(request);
         return ResponseEntity.status(responses.getMeta().getStatusCode()).body(responses);
     }
+    */
 
     @GetMapping("/test")
     public ResponseEntity<String> test() {

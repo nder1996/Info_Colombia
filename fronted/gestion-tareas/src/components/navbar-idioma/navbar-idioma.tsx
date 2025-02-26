@@ -1,114 +1,151 @@
-import { Divider } from '@mui/material';
+import { useEffect, useRef, useState } from 'react';
 import { Avatar } from 'primereact/avatar';
 import { Dropdown } from 'primereact/dropdown';
 import { Menu } from 'primereact/menu';
-import { useRef } from 'react';
-import { useLanguage } from "src/context/LanguageContext";
-import { Language } from "src/i18n/types";
-import { AuthService } from 'src/services/AuthService';
+import { Button } from 'primereact/button';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useLanguage } from 'src/context/LanguageContext';
+import { Language } from 'src/i18n/types';
+import { AuthData, AuthService } from 'src/services/AuthService';
+import useAuthStore from 'src/store/auth/useAuthStore';
+
 
 const NavbarIdioma = () => {
   const { language, changeLanguage } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const menuRef = useRef<Menu>(null);
+  const auth = useAuthStore((state) => state.Auth);
+
+
+
   const languageOptions = [
     { label: 'Español', value: 'es' as Language },
-    { label: 'English', value: 'en' as Language }
+    { label: 'English', value: 'en' as Language },
   ];
 
-  const menuRef = useRef<Menu>(null);
-
-  // Get user information from your auth service
-  const userInfo = AuthService.getInfoSession();
-  const userName = userInfo?.username || 'Invitado';
-
   const userMenuItems = [
-    {
-      separator: true
-    },
+    { separator: true },
     {
       label: 'Cerrar sesión',
       icon: 'pi pi-sign-out',
       command: () => {
         AuthService.logout();
         window.location.href = '/login';
-      }
-    }
+      },
+    },
   ];
 
   const toggleUserMenu = (event: React.MouseEvent) => {
-    menuRef.current?.toggle(event);
+    if (menuRef.current) {
+      menuRef.current.toggle(event);
+    }
   };
 
+
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: '#ffffff',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-      padding: '10px 20px',
-      height: '60px'
-    }}>
-      <div style={{
-        fontWeight: 'bold',
-        fontSize: '1.2rem',
-        color: '#333'
-      }}>
-        Gestión de Tareas
-      </div>
-      <div style={{
+    <div
+      style={{
+        width: '100%',
+        borderBottom: '1px solid #e0e0e0',
+        backgroundColor: '#fff',
         display: 'flex',
+        height: '48px',
         alignItems: 'center',
-        gap: '20px'
-      }}>
-        <div style={{
+        padding: '2rem',
+        boxSizing: 'border-box',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
+      }}
+    >
+     
+      <div
+        style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '8px'
-        }}>
-          <i className="pi pi-globe" style={{ fontSize: '1rem' }}></i>
-          <Dropdown
-            value={language}
-            options={languageOptions}
-            onChange={(e) => changeLanguage(e.value)}
-            style={{
-              minWidth: '120px'
-            }}
-          />
-        </div>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          cursor: 'pointer'
-        }} onClick={toggleUserMenu}>
-          {
-            userInfo.isAuthenticated ? (
-              <>
-                <Avatar
-                  label={userName.substring(0, 1).toUpperCase()}
-                  shape="circle"
-                  style={{ backgroundColor: '#2196F3', color: '#ffffff' }}
-                />
-                <span style={{ fontSize: '14px' }}>{userName}</span>
-                <i className="pi pi-angle-down"></i>
-                <Menu
-                  model={userMenuItems}
-                  popup
-                  ref={menuRef}
-                  style={{ width: '200px' }}
-                />
-              </>
-            ) : (
-              <span style={{ display: 'none' }}></span>
-            )
-          }
-        </div>
+          flexGrow: 1,
+        }}
+      >
+        <span
+          style={{
+            fontSize: '1.4rem',
+            fontWeight: 'bold',
+            color: '#333',
+          }}
+        >
+          Gestión de Tareas
+        </span>
       </div>
 
-    </div >
+      {auth.isAuthenticated && auth.rolAdmin && (
+        <div style={{ marginRight: '20px' }}>
+          {location.pathname.includes('GestionUsuarios') ? (
+            <Button
+              label="Gestión de Tareas"
+              icon="pi pi-list"
+              className="p-button-outlined p-button-info"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/GestionTareas');
+              }}
+            />
+          ) : (
+            <Button
+              label="Gestión de Usuarios"
+              icon="pi pi-users"
+              className="p-button-outlined p-button-info"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/GestionUsuarios');
+              }}
+            />
+          )}
+        </div>
+      )}
 
+      {/* Muestra la información del usuario si está autenticado */}
+      {auth.isAuthenticated && (
+        <div
+          onClick={toggleUserMenu}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer',
+            marginLeft: '25px',
+          }}
+        >
+          <Avatar
+            label={auth?.username ? auth.username.charAt(0).toUpperCase() : ''}
+            shape="circle"
+            style={{ backgroundColor: '#2196F3', color: '#ffffff' }}
+          />
+          <span style={{ fontSize: '14px' }}>{auth.username}</span>
+          <i className="pi pi-angle-down"></i>
+          <Menu model={userMenuItems} popup ref={menuRef} appendTo={document.body} />
+        </div>
+      )}
+
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          marginRight: '25px',
+          marginLeft: '25px',
+        }}
+      >
+        <Dropdown
+          value={language}
+          options={languageOptions}
+          onChange={(e) => changeLanguage(e.value)}
+          style={{ minWidth: '120px' }}
+        />
+      </div>
+    </div>
   );
 };
-
 
 export default NavbarIdioma;

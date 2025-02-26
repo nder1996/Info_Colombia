@@ -35,6 +35,18 @@ public class SummaryService {
         }
     }
 
+    public ApiResponse<List<EstadoTarea>> getAllRol() {
+        try {
+            List<EstadoTarea> results = repository.findAllRol();
+            if(results != null && !results.isEmpty()) {
+                return ResponseApiBuilderService.successResponse(results, "ROLES_ENCONTRADOS", 200);
+            }
+            return ResponseApiBuilderService.successResponse(null, "ROLES_ESTADOS_ENCONTRADOS", 204);
+        } catch (Exception e) {
+            return ResponseApiBuilderService.errorResponse(500, "ERROR_ROLES", "Error al obtener roles");
+        }
+    }
+
     public ApiResponse<EstadoTarea> getByIdData(Integer id) {
         try {
             EstadoTarea result = repository.findById(id);

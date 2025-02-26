@@ -1,4 +1,3 @@
-export type Language = 'en' | 'es';
 export interface ITranslations {
   autenticacion: {
     bienvenido: string;
@@ -17,6 +16,58 @@ export interface ITranslations {
     emailRequerido: string;
     emailValido: string;
     contrasenaRequerida: string;
+  };
+  usuarios: {
+    titulo: string;
+    agregarUsuario: string;
+    editarUsuario: string;
+    sinUsuarios: string;
+    tabla: {
+      id: string;
+      nombre: string;
+      email: string;
+      rol: string;
+      estado: string;
+      fechaRegistro: string;
+      acciones: string;
+      buscarPorId: string;
+      buscarPorNombre: string;
+      buscarPorEmail: string;
+    };
+    formulario: {
+      id: string;
+      nombreLabel: string;
+      emailLabel: string;
+      passwordLabel: string;
+      confirmPasswordLabel: string;
+      rolLabel: string;
+      estadoLabel: string;
+      guardarUsuario: string;
+      editarUsuario: string;
+    };
+    mensajeConfirmacion: string;
+    confirmacionEliminacion: string;
+    siEliminar: string;
+    cancelar: string;
+    eliminarUsuario: string;
+    mensajes: {
+      exito: {
+        usuarioCreado: string;
+        usuarioActualizado: string;
+        usuarioEliminado: string;
+      };
+      error: {
+        procesarUsuario: string;
+        sinDatos: string;
+        sesion: string;
+      };
+      advertencia: {
+        errorCargarUsuarios: string;
+      };
+      informacion: {
+        nuevoUsuario: string;
+      };
+    };
   };
   tareas: {
     titulo: string;
@@ -79,6 +130,7 @@ export interface ITranslations {
       minuscula: string;
       numero: string;
       caracterEspecial: string;
+      coinciden: string; // Added for password matching validation
     };
     fechaPosterior: string;
   };
@@ -133,3 +185,5 @@ export interface ITranslations {
     };
   };
 }
+
+export type Language = 'en' | 'es';

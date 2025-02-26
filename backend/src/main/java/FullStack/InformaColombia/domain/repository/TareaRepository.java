@@ -22,11 +22,12 @@ public interface TareaRepository {
             @Result(property = "estadoTarea.id", column = "idEstadoTarea"),
             @Result(property = "estadoTarea.nombre", column = "nombreEstadoTarea"),
             @Result(property = "usuario.id", column = "idUsuario"),
-            @Result(property = "usuario.nombre", column = "usuarioNombre")
+            @Result(property = "usuario.nombre", column = "usuarioNombre"),
+            @Result(property = "usuario.email", column = "usuarioEmail")
     })
     @Select("SELECT t.id as idTarea, t.titulo as titulo, t.descripcion as descripcion, t.create_at, t.update_at, t.estado, t.vencimientoTarea, " +
             "et.id as idEstadoTarea, et.nombre as nombreEstadoTarea, " +
-            "u.id as idUsuario, u.nombre as usuarioNombre " +
+            "u.id as idUsuario, u.nombre as usuarioNombre , u.email as usuarioEmail " +
             "FROM TAREAS t " +
             "JOIN USUARIOS u ON t.idUsuario = u.id " +
             "JOIN ESTADOS_TAREA et ON t.idEstadoTarea = et.id " +
@@ -45,11 +46,12 @@ public interface TareaRepository {
             @Result(property = "estadoTarea.id", column = "idEstadoTarea"),
             @Result(property = "estadoTarea.nombre", column = "nombreEstadoTarea"),
             @Result(property = "usuario.id", column = "idUsuario"),
-            @Result(property = "usuario.nombre", column = "usuarioNombre")
+            @Result(property = "usuario.nombre", column = "usuarioNombre"),
+            @Result(property = "usuario.email", column = "usuarioEmail")
     })
     @Select("SELECT t.id as idTarea, t.titulo as titulo, t.descripcion as descripcion, t.create_at, t.update_at, t.estado, t.vencimientoTarea, " +
             "et.id as idEstadoTarea, et.nombre as nombreEstadoTarea, " +
-            "u.id as idUsuario, u.nombre as usuarioNombre " +
+            "u.id as idUsuario, u.nombre as usuarioNombre , u.email as usuarioEmail " +
             "FROM TAREAS t " +
             "JOIN USUARIOS u ON t.idUsuario = u.id " +
             "JOIN ESTADOS_TAREA et ON t.idEstadoTarea = et.id " +

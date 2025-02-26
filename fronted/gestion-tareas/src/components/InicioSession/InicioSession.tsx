@@ -16,7 +16,7 @@ import { SesionServices } from 'src/services/SesionServices';
 import useAuthStore from 'src/store/auth/useAuthStore';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { setTimeout } from 'timers/promises';
-import { AuthService } from 'src/services/AuthService';
+import { AuthData, AuthService } from 'src/services/AuthService';
 import { Divider } from 'primereact/divider';
 import { Password } from 'primereact/password';
 import { useToast } from 'src/context/ToastContext';
@@ -24,6 +24,7 @@ import NavbarIdioma from '../navbar-idioma/navbar-idioma';
 import { useLanguage } from 'src/context/LanguageContext';
 import { traducciones } from 'src/i18n/traducciones';
 import { Language } from 'src/i18n/types';
+import { UsuarioService } from 'src/services/UsuarioService';
 
 
 
@@ -46,12 +47,14 @@ const createValidationSchema = (t: typeof traducciones, language: Language) => y
 const InicioSession = () => {
   const [isLoading, setIsLoading] = useState(false);
   const setUseAuthState = useAuthStore((state) => state.setAuth);
-  const Auth = useAuthStore((state) => state.Auth);
+
   const navigate = useNavigate();
   const { mostrarExito, mostrarError } = useToast();
   const { language } = useLanguage();
   const texts = traducciones[language].autenticacion;
   const schema = createValidationSchema(traducciones, language);
+  const Auth = useAuthStore((state) => state.Auth);
+  const setAuth = useAuthStore((state) => state.setAuth);
 
   const { register, handleSubmit, formState: { errors }, setValue, watch } = useForm<FormInputs>({
     resolver: yupResolver(schema)
@@ -61,16 +64,17 @@ const InicioSession = () => {
     try {
       setIsLoading(true);
       await SesionServices.login(data.username, data.password);
-      const token = AuthService.getToken();
-      if (!token || token.trim() === "") {
+      const token = AuthService.getInfoSession();
+      if (!token.isAuthenticated) {
         mostrarError('Error', 'Usuario o contraseña inválidos');
         return;
       }
       setIsLoading(false);
-      setUseAuthState({
-        token: token,
-        isAuthenticated: true,
-        username: data.username
+      setAuth({
+        token: token.token,
+        isAuthenticated: token.isAuthenticated,
+        username: token.username,
+        rolAdmin: token.rolAdmin
       });
       mostrarExito('¡Bienvenido!', `Bienvenido ${data.username}`);
     } catch (error: any) {
@@ -88,7 +92,7 @@ const InicioSession = () => {
 
   return (
     <div className="login-container">
-      <NavbarIdioma></NavbarIdioma>
+
       <Card className="login-card">
         <div className="login-header">
           <h2>{texts.bienvenido}</h2>

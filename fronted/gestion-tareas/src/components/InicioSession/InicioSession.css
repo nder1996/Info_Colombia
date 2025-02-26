@@ -55,14 +55,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   width: 100% !important;
 }
 
 .login-card {
   margin: 10px;
   width: 100%;
-  width: 450px;
+  max-width: 450px;
   padding: 2rem;
 }
 

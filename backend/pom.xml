@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>FullStack</groupId>
 	<artifactId>InformaColombia</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>api</version>
 	<packaging>war</packaging>
 	<name>InformaColombia</name>
 	<description>FullStack</description>

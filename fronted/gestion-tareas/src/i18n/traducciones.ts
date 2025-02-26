@@ -20,6 +20,58 @@ export const traducciones: Record<Language, ITranslations> = {
         emailValido: "Ingrese un correo electrónico válido",
         contrasenaRequerida: "La contraseña es requerida"
       },
+      usuarios: {
+        titulo: 'Gestión de Usuarios',
+        agregarUsuario: 'Agregar Usuario',
+        editarUsuario: 'Editar Usuario',
+        sinUsuarios: 'No hay usuarios registrados',
+        tabla: {
+          id: 'ID',
+          nombre: 'Nombre',
+          email: 'Email',
+          rol: 'Rol',
+          estado: 'Estado',
+          fechaRegistro: 'Fecha Registro',
+          acciones: 'Acciones',
+          buscarPorId: 'Buscar por ID',
+          buscarPorNombre: 'Buscar por nombre',
+          buscarPorEmail: 'Buscar por email'
+        },
+        formulario: {
+          id: 'ID',
+          nombreLabel: 'Nombre',
+          emailLabel: 'Email',
+          passwordLabel: 'Contraseña',
+          confirmPasswordLabel: 'Confirmar Contraseña',
+          rolLabel: 'Rol',
+          estadoLabel: 'Estado',
+          guardarUsuario: 'Guardar Usuario',
+          editarUsuario: 'Actualizar Usuario'
+        },
+        mensajeConfirmacion: '¿Está seguro que desea eliminar al usuario {0}?',
+        confirmacionEliminacion: 'Confirmar Eliminación',
+        siEliminar: 'Sí, Eliminar',
+        cancelar: 'Cancelar',
+        eliminarUsuario: 'Eliminar Usuario',
+        mensajes: {
+          exito: {
+            usuarioCreado: 'Usuario creado exitosamente',
+            usuarioActualizado: 'Usuario actualizado exitosamente',
+            usuarioEliminado: 'El usuario {0} ha sido eliminado exitosamente'
+          },
+          error: {
+            procesarUsuario: 'Error al procesar el usuario',
+            sinDatos: 'No hay datos para procesar',
+            sesion: 'Error de sesión'
+          },
+          advertencia: {
+            errorCargarUsuarios: 'Error al cargar usuarios'
+          },
+          informacion: {
+            nuevoUsuario: 'Nuevo usuario registrado'
+          }
+        }
+      },
       tareas: {
         titulo: "Título",
         descripcion: "Descripción",
@@ -80,7 +132,8 @@ export const traducciones: Record<Language, ITranslations> = {
           mayuscula: "Debe contener una mayúscula",
           minuscula: "Debe contener una minúscula",
           numero: "Debe contener un número",
-          caracterEspecial: "Debe contener un carácter especial"
+          caracterEspecial: "Debe contener un carácter especial",
+          coinciden: "Las contraseñas no coinciden"
         },
         fechaPosterior: "La fecha debe ser posterior a hoy"
       },
@@ -154,6 +207,58 @@ export const traducciones: Record<Language, ITranslations> = {
         emailValido: "Please enter a valid email",
         contrasenaRequerida: "Password is required"
       },
+      usuarios: {
+        titulo: 'User Management',
+        agregarUsuario: 'Add User',
+        editarUsuario: 'Edit User',
+        sinUsuarios: 'No users registered',
+        tabla: {
+          id: 'ID',
+          nombre: 'Name',
+          email: 'Email',
+          rol: 'Role',
+          estado: 'Status',
+          fechaRegistro: 'Registration Date',
+          acciones: 'Actions',
+          buscarPorId: 'Search by ID',
+          buscarPorNombre: 'Search by name',
+          buscarPorEmail: 'Search by email'
+        },
+        formulario: {
+          id: 'ID',
+          nombreLabel: 'Name',
+          emailLabel: 'Email',
+          passwordLabel: 'Password',
+          confirmPasswordLabel: 'Confirm Password',
+          rolLabel: 'Role',
+          estadoLabel: 'Status',
+          guardarUsuario: 'Save User',
+          editarUsuario: 'Update User'
+        },
+        mensajeConfirmacion: 'Are you sure you want to delete user {0}?',
+        confirmacionEliminacion: 'Confirm Deletion',
+        siEliminar: 'Yes, Delete',
+        cancelar: 'Cancel',
+        eliminarUsuario: 'Delete User',
+        mensajes: {
+          exito: {
+            usuarioCreado: 'User created successfully',
+            usuarioActualizado: 'User updated successfully',
+            usuarioEliminado: 'User {0} has been successfully deleted'
+          },
+          error: {
+            procesarUsuario: 'Error processing user',
+            sinDatos: 'No data to process',
+            sesion: 'Session error'
+          },
+          advertencia: {
+            errorCargarUsuarios: 'Error loading users'
+          },
+          informacion: {
+            nuevoUsuario: 'New user registered'
+          }
+        }
+      },
       tareas: {
         titulo: "Title",
         descripcion: "Description",
@@ -214,7 +319,8 @@ export const traducciones: Record<Language, ITranslations> = {
           mayuscula: "Must contain an uppercase letter",
           minuscula: "Must contain a lowercase letter", 
           numero: "Must contain a number",
-          caracterEspecial: "Must contain a special character"
+          caracterEspecial: "Must contain a special character",
+          coinciden: "Passwords don't match"
         },
         fechaPosterior: "Date must be after today"
       },

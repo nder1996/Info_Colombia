@@ -9,6 +9,8 @@ public class UsuarioRequest {
 
     private Integer id;
 
+    private Integer idRol;
+
     @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 100, message = "El nombre no puede exceder 100 caracteres")
     private String nombre;
@@ -48,8 +50,16 @@ public class UsuarioRequest {
         return id;
     }
 
-    public void setInteger(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getIdRol() {
+        return idRol;
+    }
+
+    public void setIdRol(Integer idRol) {
+        this.idRol = idRol;
     }
 
 

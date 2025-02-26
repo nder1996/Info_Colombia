@@ -3,25 +3,32 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import useAuthStore from "../store/auth/useAuthStore";
 import GestionTareas from "src/components/gestion-tareas/GestionTareas";
-import InicioSession from "src/components/InicioSession/InicioSession";
-import Registrarse from "src/components/Registrarse/Registrarse";
+import InicioSession from "src/components/inicioSession/InicioSession";
+import Registrarse from "src/components/registrarse/Registrarse";
+import GestionUsuarios from "src/components/gestion-usuarios/GestionUsuarios";
 
 const AppRoutes: React.FC = () => {
   const auth = useAuthStore((state) => state.Auth);
 
+
   return (
     <Routes>
-      <Route path="/login" element={<InicioSession />} />
-      <Route path="/Registro" element={<Registrarse />} />
-      
-      {/* Agrupar rutas protegidas dentro de ProtectedRoute */}
+      <Route
+        path="/login"
+        element={!auth.isAuthenticated ? <InicioSession /> : <Navigate to="/GestionTareas" />}
+      />
+      <Route
+        path="/Registro"
+        element={!auth.isAuthenticated ? <Registrarse /> : <Navigate to="/GestionTareas" />}
+      />
+
       <Route element={<ProtectedRoute />}>
         <Route path="/GestionTareas" element={<GestionTareas />} />
+        <Route path="/GestionUsuarios" element={<GestionUsuarios />} />
       </Route>
 
-      {/* Redirigir a login si no hay ruta válida */}
-      
-       <Route path="*" element={<Navigate to={auth.isAuthenticated ? "/GestionTareas" : "/login"} replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+
     </Routes>
   );
 };

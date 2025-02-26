@@ -126,6 +126,8 @@ public class TareaService {
     public ApiResponse<String> updateTarea(TareaRequest task) {
         try {
             Usuario user = byUserXEmail(task.getUsername());
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String userPrivado = null;
 
             Tarea tarea = new Tarea();
             tarea.setId(task.getId());
@@ -139,15 +141,41 @@ public class TareaService {
 
             Integer row = this.tareaRepository.updateTareas(tarea);
 
-            if(row != null && row > 0) {
-                return ResponseApiBuilderService.successResponse("Tarea actualizada exitosamente", "TAREA_ACTUALIZADA",200);
+            if (auth != null && auth.getPrincipal() instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) auth.getPrincipal();
+                if (!userDetails.getUsername().equals(task.getUsername())) {
+                    userPrivado = task.getUsername();
+                }
             }
-            return ResponseApiBuilderService.successResponse("No se pudo actualizar la tarea", "HUBO_UN_ERROR",400);
 
+            if (row != null && row > 0) {
+                if (userPrivado != null) {
+                    notificationService.sendPrivateNotification(
+                            task.getTitulo(),
+                            userPrivado,
+                            task.getDescripcion()
+                    );
+                }
+
+                return ResponseApiBuilderService.successResponse(
+                        "Tarea actualizada exitosamente",
+                        "TAREA_ACTUALIZADA",
+                        200
+                );
+            }
+
+            return ResponseApiBuilderService.successResponse(
+                    "No se pudo actualizar la tarea",
+                    "HUBO_UN_ERROR",
+                    400
+            );
 
         } catch (Exception e) {
-            e.getStackTrace();
-            return ResponseApiBuilderService.errorResponse(500,"ERROR_SERVER","INTERNAL_SERVER_ERROR");
+            return ResponseApiBuilderService.errorResponse(
+                    500,
+                    "ERROR_SERVER",
+                    "INTERNAL_SERVER_ERROR"
+            );
         }
     }
 

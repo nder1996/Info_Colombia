@@ -27,6 +27,12 @@ public class SummaryController {
         return ResponseEntity.status(response.getMeta().getStatusCode()).body(response);
     }
 
+    @GetMapping("getAllRoles")
+    public ResponseEntity<ApiResponse<List<EstadoTarea>>> getAllRoles() {
+        ApiResponse<List<EstadoTarea>> response = this.summaryService.getAllRol();
+        return ResponseEntity.status(response.getMeta().getStatusCode()).body(response);
+    }
+
     @GetMapping("getByData/{id}")
     public ResponseEntity<ApiResponse<EstadoTarea>> getByData(
             @Valid  @PathVariable Integer id) {

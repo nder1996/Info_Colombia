@@ -23,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class AuthService implements UserDetailsService{
@@ -71,7 +72,10 @@ public class AuthService implements UserDetailsService{
     public ApiResponse<String> crearUsuario(UsuarioRequest usuario) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
-
+            Optional<Usuario> existingUser = usuarioRepository.ByUser(usuario.getEmail());
+            if (existingUser.isPresent()) {
+                return ResponseApiBuilderService.errorResponse(400, "USERNAME_DUPLICADO", "El username ya está registrado");
+            }
             Usuario user = new Usuario();
             user.setCreateAt(new Date());
             user.setEstado("A");
@@ -79,9 +83,12 @@ public class AuthService implements UserDetailsService{
             user.setEmail(usuario.getEmail());
             user.setPassword(passwordEncoder.encode(usuario.getPassword()));
             user.setUpdateAt(null);
-
             int rowAffect = this.usuarioRepository.insertUser(user);
             if (rowAffect > 0) {
+                UsuarioXRolRequest usuarioXRolRequest = new UsuarioXRolRequest();
+                usuarioXRolRequest.setIdUsuario(2);
+                usuarioXRolRequest.setIdUsuario(user.getId());
+                asignacionRolUsuario(usuarioXRolRequest);
                 return ResponseApiBuilderService.successResponse(usuario.getEmail(), "Usuario creado exitosamente", 200);
             }
         } catch (Exception e) {

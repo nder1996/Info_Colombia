@@ -18,11 +18,9 @@ public class Usuario implements UserDetails {
     private Date updateAt;
     private List<Rol> roles;
 
-    // Constructor sin argumentos
     public Usuario() {
     }
 
-    // Constructor con todos los argumentos
     public Usuario(Integer id, String nombre, String email, String estado, Date createAt, Date updateAt, List<Rol> roles, String password) {
         this.id = id;
         this.nombre = nombre;
@@ -95,18 +93,6 @@ public class Usuario implements UserDetails {
         this.roles = roles;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", email='" + email + '\'' +
-                ", estado='" + estado + '\'' +
-                ", createAt=" + createAt +
-                ", updateAt=" + updateAt +
-                ", roles=" + roles +
-                '}';
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

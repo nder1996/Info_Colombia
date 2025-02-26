@@ -17,4 +17,7 @@ public interface SummaryRepository {
     @Select("SELECT * FROM ESTADOS_TAREA WHERE id = #{id}")
     EstadoTarea findById( @Param("id") Integer id);
 
+    @Select("SELECT * FROM ROLES")
+    List<EstadoTarea> findAllRol();
+
 }
