@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
 import useAuthStore from "../store/auth/useAuthStore";
 import GestionTareas from "src/components/gestion-tareas/GestionTareas";
-import InicioSession from "src/components/inicioSession/InicioSession";
+import InicioSession from "src/components/InicioSession/InicioSession";
 import Registrarse from "src/components/registrarse/Registrarse";
 import GestionUsuarios from "src/components/gestion-usuarios/GestionUsuarios";
 
