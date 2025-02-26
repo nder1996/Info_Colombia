@@ -94,6 +94,25 @@ Prueba la aplicación en: https://meek-quokka-2cc7d8.netlify.app/login
 - **Administrador**: admin@sistema.com / Admin123
 - **Usuario**: juan.perez@ejemplo.com / Admin123
 
+Detalles de Despliegue
+
+Backend: Render con Docker
+Frontend: Netlify
+Base de Datos: MySQL en AlwaysData
+URL: https://meek-quokka-2cc7d8.netlify.app/login
+
+Pasos de Despliegue
+
+Construcción de imagen Docker
+Subir a repositorio
+Configurar variables de entorno
+Desplegar en plataformas cloud
+
+Credenciales de Prueba
+
+Administrador: admin@sistema.com / Admin123
+Usuario: juan.perez@ejemplo.com / Admin123
+
 ## 🚀 Aspectos técnicos destacados
 
 ### Frontend
@@ -158,4 +177,3 @@ npm run build
 Desarrollado por Anderson Arévalo Madrid
 
 - Email: arevalomadrid62776@gmail.com
----
