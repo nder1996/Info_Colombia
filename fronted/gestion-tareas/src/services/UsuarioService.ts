@@ -1,9 +1,5 @@
-import axios from "axios";
-import { AuthService } from "./AuthService";
-import { LocalStarogeService } from "./localStorageService";
 import { ApiResponse } from "src/models/ApiResponse";
 import InterceptorAuth from "./InterceptorAuth";
-import { usuarioRegister } from "./SesionServices";
 
 
 

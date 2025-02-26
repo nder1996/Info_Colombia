@@ -24,7 +24,6 @@
       "node_modules/crypto-js"
     ]
   }
-    
     /*"paths": {
       //"@/*": ["src/*"]
       "src/*": ["src/*"]

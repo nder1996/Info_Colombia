@@ -1,6 +1,5 @@
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { AuthService } from "./AuthService";
 
 
 interface Notification {

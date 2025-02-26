@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { AuthService } from './AuthService';
 import { loadingStore } from './interceptorLoadingService';
-import { ToastProvider, useToast } from '../context/ToastContext';
 
 const InterceptorAuth = {
   usuario: axios.create({

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { ApiResponse } from 'src/models/ApiResponse';
 import InterceptorAuth from './InterceptorAuth';
 

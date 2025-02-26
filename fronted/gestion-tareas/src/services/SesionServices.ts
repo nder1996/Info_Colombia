@@ -1,8 +1,6 @@
 import axios from "axios";
 import { AuthData, AuthService } from "./AuthService";
-import { LocalStarogeService } from "./localStorageService";
 import { ApiResponse } from "src/models/ApiResponse";
-import { UsuarioService } from "./UsuarioService";
 
 
 

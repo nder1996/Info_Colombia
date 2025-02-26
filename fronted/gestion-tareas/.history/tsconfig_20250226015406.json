@@ -19,11 +19,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-    "crypto": [
-      "node_modules/crypto-js"
-    ]
-  }
     
     /*"paths": {
       //"@/*": ["src/*"]

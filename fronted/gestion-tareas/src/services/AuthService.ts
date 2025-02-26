@@ -1,5 +1,4 @@
-import useAuthStore from 'src/store/auth/useAuthStore';
-import { create } from 'zustand';
+
 import { LocalStarogeService } from './localStorageService';
 import { UsuarioService } from './UsuarioService';
 

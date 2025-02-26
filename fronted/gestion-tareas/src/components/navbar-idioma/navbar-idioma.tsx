@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLanguage } from 'src/context/LanguageContext';
 import { Language } from 'src/i18n/types';
-import { AuthData, AuthService } from 'src/services/AuthService';
+import {  AuthService } from 'src/services/AuthService';
 import useAuthStore from 'src/store/auth/useAuthStore';
 
 
