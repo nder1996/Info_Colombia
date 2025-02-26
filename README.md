@@ -105,13 +105,8 @@ Pasos de Despliegue
 
 Construcción de imagen Docker
 Subir a repositorio
-Configurar variables de entorno
 Desplegar en plataformas cloud
 
-Credenciales de Prueba
-
-Administrador: admin@sistema.com / Admin123
-Usuario: juan.perez@ejemplo.com / Admin123
 
 ## 🚀 Aspectos técnicos destacados
 
