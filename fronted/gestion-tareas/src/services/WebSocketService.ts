@@ -19,7 +19,7 @@ interface Notification {
         return;
       }
    
-      const socket = new SockJS("http://localhost:8700/ws");
+      const socket = new SockJS("https://https://info-colombia.onrender.com/ws");
    
       this.client = new Client({
         webSocketFactory: () => socket,
