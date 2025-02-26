@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: FullStack.InformaColombia.infrastructure.security.jwt.service.AuthServiceTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.326 s -- in FullStack.InformaColombia.infrastructure.security.jwt.service.AuthServiceTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.294 s -- in FullStack.InformaColombia.infrastructure.security.jwt.service.AuthServiceTest
