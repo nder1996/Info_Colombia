@@ -16,9 +16,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        // Enable simple broker for topic and queue destinations
         registry.enableSimpleBroker("/topic", "/queue", "/user");
-        // Set prefix for application destinations
         registry.setApplicationDestinationPrefixes("/app");
         // Set prefix for user-specific destinations
         registry.setUserDestinationPrefix("/user");
@@ -27,7 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("http://localhost:3000", "http://localhost:3001")
+                .setAllowedOrigins("http://localhost:3000", "http://localhost:3001","https://subtle-puppy-9e58b8.netlify.app")
                 .withSockJS();
         logger.info("📡 WebSocket STOMP endpoint registered at /ws");
     }

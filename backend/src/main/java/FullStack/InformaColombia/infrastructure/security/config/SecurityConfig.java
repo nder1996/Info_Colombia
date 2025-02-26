@@ -45,7 +45,7 @@ public class SecurityConfig {
         return http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(Arrays.asList("http://localhost:3001", "http://localhost:3000"));
+                    config.setAllowedOrigins(Arrays.asList("http://localhost:3001", "http://localhost:3000","https://subtle-puppy-9e58b8.netlify.app"));
                     config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
                     config.setExposedHeaders(Arrays.asList("Authorization"));
